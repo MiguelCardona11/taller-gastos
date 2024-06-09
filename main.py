@@ -1,16 +1,14 @@
-from enums import *
-from Models.Viaje import *
-from Models.DiasViaje import *
-from Models.Gasto import *
-from Controllers.ControlViaje import *
 from datetime import date
+from enums import Destino, MetodoPago, TipoGasto
+from Models.Viaje import Viaje
+from Controllers.ControlViaje import ControlViaje
 
-"""
-Método que muestra los destinos disponibles a partir de un Enum
-y permite seleccionar uno de ellos.
-:return: cadena correspondiente al destino seleccionado
-"""
 def seleccionar_destino() -> str:
+    """
+    Método que muestra los destinos disponibles a partir de un Enum
+    y permite seleccionar uno de ellos.
+    :return: cadena correspondiente al destino seleccionado
+    """
     print("\nSeleccione el destino:")
     for i, destino in enumerate(Destino, start=1):
         print(f"{i}. {destino.value}")
@@ -25,12 +23,12 @@ def seleccionar_destino() -> str:
         except ValueError:
             pass
         
-"""
-Método que muestra los métodos de pago disponibles a partir de un Enum
-y permite seleccionar uno de ellos.
-:return: cadena correspondiente al método de pago seleccionado
-"""
 def seleccionar_metodo_pago() -> str:
+    """
+    Método que muestra los métodos de pago disponibles a partir de un Enum
+    y permite seleccionar uno de ellos.
+    :return: cadena correspondiente al método de pago seleccionado
+    """
     print("\nSeleccione el método de pago:")
     for i, metodo in enumerate(MetodoPago, start=1):
         print(f"{i}. {metodo.value}")
@@ -44,13 +42,13 @@ def seleccionar_metodo_pago() -> str:
                 print("Opción inválida. Intente nuevamente.")
         except ValueError:
             pass
-        
-"""
-Método que muestra los tipos de gasto disponibles a partir de un Enum
-y permite seleccionar uno de ellos.
-:return: cadena correspondiente al tipo de gasto seleccionado
-"""
+
 def seleccionar_tipo_gasto() -> str:
+    """
+    Método que muestra los tipos de gasto disponibles a partir de un Enum
+    y permite seleccionar uno de ellos.
+    :return: cadena correspondiente al tipo de gasto seleccionado
+    """
     print("\nSeleccione el tipo de gasto:")
     for i, tipo in enumerate(TipoGasto, start=1):
         print(f"{i}. {tipo.value}")
@@ -64,13 +62,12 @@ def seleccionar_tipo_gasto() -> str:
                 print("Opción inválida. Intente nuevamente.")
         except ValueError:
             pass
-        
-
-"""
-Método que valida que la fecha inicial ingresada no sea mayor a la final, y tenga formato correcto
-:return: valores de fecha de inicio y fecha de fin
-"""          
+       
 def validar_fechas() -> date:
+    """
+    Método que valida que la fecha inicial ingresada no sea mayor a la final, y tenga formato correcto
+    :return: valores de fecha de inicio y fecha de fin
+    """   
     while True:
         try:
             fecha_inicio = date.fromisoformat(input("Ingrese la fecha de inicio (AAAA-MM-DD): "))
@@ -81,13 +78,13 @@ def validar_fechas() -> date:
                 return fecha_inicio, fecha_final
         except ValueError:
             print("Formato de fecha inválido, Introduzca una fecha en formato AAAA-MM-DD.")
-
-"""
-Método que valida el formato de fecha ingresado (AAAA-MM-DD).
-:param mensaje: mensaje de input para pedir la fecha al usuario
-:return: valor de la fecha de tipom date
-"""   
+ 
 def validar_formato_fecha(mensaje) -> date:
+    """
+    Método que valida el formato de fecha ingresado (AAAA-MM-DD).
+    :param mensaje: mensaje de input para pedir la fecha al usuario
+    :return: valor de la fecha de tipom date
+    """  
     while True:
         try:
             fecha = date.fromisoformat(input(mensaje))
@@ -95,13 +92,13 @@ def validar_formato_fecha(mensaje) -> date:
         except ValueError:
             print("Formato de fecha inválido, Introduzca una fecha en formato AAAA-MM-DD.")
         
-"""
-Método que verifica que una fecha indicada se encuentre dentro de las fechas de un viaje.
-correspondiente y que su formato sea correcto.
-:param viaje: viaje con una fecha inicial y final en donde se debe encontrar la fecha ingresada.
-:return: cadena correspondiente a la fecha escrita en formato date.
-"""
 def seleccionar_fecha_dia(viaje: Viaje) -> date:
+    """
+    Método que verifica que una fecha indicada se encuentre dentro de las fechas de un viaje.
+    correspondiente y que su formato sea correcto.
+    :param viaje: viaje con una fecha inicial y final en donde se debe encontrar la fecha ingresada.
+    :return: cadena correspondiente a la fecha escrita en formato date.
+    """
     fin = True
     while fin:
         try:

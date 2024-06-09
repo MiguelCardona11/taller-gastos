@@ -15,10 +15,10 @@ class DiasViaje:
     
     def obtener_fecha(self):
         return self._fecha
-    
-    """
-    Método que imprime todos los gastos asociados a un DiaViaje
-    """
+
     def imprimir_gastos_dia(self) -> None:
+        """
+        Método que imprime todos los gastos asociados a un DiaViaje
+        """
         for gasto in self._gastos:
             print(gasto.obtener_valor_gastado())
