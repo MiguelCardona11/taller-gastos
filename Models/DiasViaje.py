@@ -1,4 +1,4 @@
-from Gasto import Gasto
+from Models.Gasto import Gasto
 from datetime import date
 from typing import List
 
@@ -12,3 +12,7 @@ class DiasViaje:
 
     def obtener_gastos(self) -> List[Gasto]:
         return self._gastos
+    
+    def obtener_fecha(self) -> date:
+        return self._fecha
+    
