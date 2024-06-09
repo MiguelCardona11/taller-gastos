@@ -26,5 +26,5 @@ class test_viaje(unittest.TestCase):
         dia = DiasViaje("2024-06-10")
         viaje.agregar_dia(dia)
         control_viaje = ControlViaje()
-        diferencia = control_viaje.registrar_gasto(viaje, "2024-06-10", 100, MetodoPago.EFECTIVO, TipoGasto.ENTRETENIMIENTO)
+        diferencia = control_viaje.registrar_gasto(viaje, "2024-06-10", 1000, MetodoPago.EFECTIVO, TipoGasto.ENTRETENIMIENTO)
         self.assertEqual("cero", diferencia)
