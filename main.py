@@ -129,7 +129,7 @@ def main():
         
         viaje.agregar_dias_viaje()
         
-        # Agregar gastos a un día1
+        # Agregar gastos a un día
         agregar_gastos = input("\n¿Desea agregar gastos a un día? (s/n): ").lower()
         while agregar_gastos == 's':
             fecha_dia = seleccionar_fecha_dia(viaje)
@@ -142,7 +142,8 @@ def main():
             
             agregar_gastos = input("\n¿Desea agregar otro gasto a un día? (s/n): ").lower()
                     
-        control_viaje.reporte_gasto_diario_por_tipo_metodo(viaje)
+        ruta = control_viaje.reporte_gasto_diario_por_tipo_metodo(viaje)
+        print("Reporte creado con éxito en "+ruta)
         
         # Preguntar si desea registrar un nuevo viaje
         nuevo_viaje = input("\n¿Desea registrar un nuevo viaje? (s/n): ").lower()

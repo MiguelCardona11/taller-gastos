@@ -1,6 +1,7 @@
 from Models.Viaje import *
 from Models.DiasViaje import *
 from Models.Gasto import *
+from Models.Archivo import *
 from enums import *
 import requests
 
@@ -49,13 +50,26 @@ class ControlViaje:
             diferencia = "cero"
         return diferencia
     
+    """
+    Método que llama a una API que genera un número aleatorio}
+    entre 3500 y 4500
+    :return: numero aleatorio entre 3500 y 4500.
+    """
     def uso_api(self):
         response = requests.get("https://csrng.net/csrng/csrng.php?min=3500&max=4500")
         data = response.json()
         random_number = data[0]['random']
         return random_number
     
-    def reporte_gasto_diario_por_tipo_metodo(self, viaje: Viaje):
+    """
+    Método que genera un reporte en un archivo .txt que muestra el valor
+    gastado cada día, separado en efectivo y en tarjeta, y el total de un viaje.
+    :param viaje: objeto de tipo viaje sobre el cual se realizará el reporte
+    :return: Ruta completa del archivo de reporte generado.
+    """
+    def reporte_gasto_diario_por_tipo_metodo(self, viaje: Viaje) -> str:
+        archivo = Archivo("reporte_gasto_diario", "C:/Users/ASUS/Desktop/Universidad/2024-1/Ingeniería de Software I/Talleres entregables/Tarea5-SwI-2024-1-Final/reportes")
+        archivo.vaciar_archivo()
         cambio = 1
         if viaje._lugar_destino == "USA":
             cambio = self.uso_api()
@@ -67,9 +81,6 @@ class ControlViaje:
             gasto_tarjeta = 0
             gasto_diario_total = 0
             for gasto in dia.obtener_gastos():
-                gasto_efectivo = 0
-                gasto_tarjeta = 0
-                gasto_diario_total = 0
                 if gasto._metodo_pago == "EFECTIVO":
                     gasto_efectivo += gasto.obtener_valor_gastado()
                     gasto_efectivo = gasto_efectivo*cambio
@@ -77,4 +88,10 @@ class ControlViaje:
                     gasto_tarjeta += gasto.obtener_valor_gastado()
                     gasto_tarjeta = gasto_tarjeta*cambio
                 gasto_diario_total = gasto_efectivo + gasto_tarjeta
-            print("Gastos para el día "+str(dia._fecha)+" (COP): \nGasto en efectivo: "+str(gasto_efectivo)+"\nGasto en tarjeta: "+str(gasto_tarjeta)+"\nTotal: "+str(gasto_diario_total)+"\n")
+                
+            texto = (f"Gastos para el día {dia._fecha} (COP): \n"
+                     f"Gasto en efectivo: {gasto_efectivo}\n"
+                     f"Gasto en tarjeta: {gasto_tarjeta}\n"
+                     f"Total: {gasto_diario_total}\n")
+            archivo.llenar_archivo(texto)
+        return archivo.obtener_ruta_completa()

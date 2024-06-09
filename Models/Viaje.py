@@ -17,6 +17,9 @@ class Viaje:
     def obtener_dias_viaje(self) -> List[DiasViaje]:
         return self._DiasViaje
     
+    def obtener_presupuesto(self):
+        return self._presupuesto_estimado
+    
     """
     Método que crea objetos de tipo DiasViaje a partir
     de las fechas de inicio y fin de un viaje.
@@ -33,13 +36,9 @@ class Viaje:
     """
     Método que imprime todas las fechas de un viaje.
     """
-    def imprimir_fechas_viaje(self):
+    def imprimir_fechas_viaje(self) -> None:
         for dia in self._DiasViaje:
             print(dia.obtener_fecha())
-            
-    def obtener_presupuesto(self):
-        return self._presupuesto_estimado
-    
 
     
     
