@@ -10,6 +10,9 @@ class Viaje:
         self._fecha_inicio = fecha_inicio
         self._fecha_final = fecha_final
         self._DiasViaje: List[DiasViaje] = []
+        
+    def agregar_dia(self, dia: DiasViaje):
+        self._DiasViaje.append(dia)
 
     def obtener_dias_viaje(self) -> List[DiasViaje]:
         return self._DiasViaje

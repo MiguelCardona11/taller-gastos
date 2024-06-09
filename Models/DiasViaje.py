@@ -11,14 +11,13 @@ class DiasViaje:
         self._gastos.append(gasto)
 
     def obtener_gastos(self):
+        return self._gastos
+    
+    def obtener_fecha(self):
+        return self._fecha
+    
+    def imprimir_gastos_dia(self):
         for gasto in self._gastos:
             print(gasto.obtener_valor_gastado())
     
-    def obtener_fecha(self) -> date:
-        return self._fecha
     
-    
-
-##
-
-dia = DiasViaje("2024-03-20")

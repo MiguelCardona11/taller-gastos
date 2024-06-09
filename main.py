@@ -5,7 +5,6 @@ from Models.Gasto import *
 from Controllers.ControlViaje import *
 from datetime import date
 
-
 """
 Método que muestra los destinos disponibles a partir de un Enum
 y permite seleccionar uno de ellos.
@@ -96,8 +95,13 @@ def validar_formato_fecha(mensaje) -> date:
         except ValueError:
             print("Formato de fecha inválido, Introduzca una fecha en formato AAAA-MM-DD.")
         
-
-def seleccionar_fecha_dia(viaje: Viaje):
+"""
+Método que verifica que una fecha indicada se encuentre dentro de las fechas de un viaje.
+correspondiente y que su formato sea correcto.
+:param viaje: viaje con una fecha inicial y final en donde se debe encontrar la fecha ingresada.
+:return: cadena correspondiente a la fecha escrita en formato date.
+"""
+def seleccionar_fecha_dia(viaje: Viaje) -> date:
     fin = True
     while fin:
         try:
@@ -125,7 +129,7 @@ def main():
         
         viaje.agregar_dias_viaje()
         
-        # Agregar gastos a un día
+        # Agregar gastos a un día1
         agregar_gastos = input("\n¿Desea agregar gastos a un día? (s/n): ").lower()
         while agregar_gastos == 's':
             fecha_dia = seleccionar_fecha_dia(viaje)
@@ -137,6 +141,8 @@ def main():
             print("\n--> Diferencia de gasto con respecto al presupuesto diario: " + diferencia)
             
             agregar_gastos = input("\n¿Desea agregar otro gasto a un día? (s/n): ").lower()
+                    
+        control_viaje.reporte_gasto_diario_por_tipo_metodo(viaje)
         
         # Preguntar si desea registrar un nuevo viaje
         nuevo_viaje = input("\n¿Desea registrar un nuevo viaje? (s/n): ").lower()
@@ -145,6 +151,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-    
-    

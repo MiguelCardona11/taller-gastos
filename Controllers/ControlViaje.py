@@ -2,6 +2,7 @@ from Models.Viaje import *
 from Models.DiasViaje import *
 from Models.Gasto import *
 from enums import *
+import requests
 
 class ControlViaje:
     
@@ -12,9 +13,10 @@ class ControlViaje:
     :return: objeto de tipo DiasViaje.
     """
     def buscar_dia(self, viaje: Viaje, fecha: date) -> DiasViaje:
-        for dia in viaje._DiasViaje:
-            if fecha == dia._fecha:
+        for dia in viaje.obtener_dias_viaje():
+            if fecha == dia.obtener_fecha():
                 return dia
+        return None
     
     """
     Método que guarda un gasto en la lista de gastos de un DiaViaje.
@@ -47,3 +49,32 @@ class ControlViaje:
             diferencia = "cero"
         return diferencia
     
+    def uso_api(self):
+        response = requests.get("https://csrng.net/csrng/csrng.php?min=3500&max=4500")
+        data = response.json()
+        random_number = data[0]['random']
+        return random_number
+    
+    def reporte_gasto_diario_por_tipo_metodo(self, viaje: Viaje):
+        cambio = 1
+        if viaje._lugar_destino == "USA":
+            cambio = self.uso_api()
+        elif viaje._lugar_destino == "EUROPA":
+            cambio = self.uso_api() + 200
+        
+        for dia in viaje.obtener_dias_viaje():
+            gasto_efectivo = 0
+            gasto_tarjeta = 0
+            gasto_diario_total = 0
+            for gasto in dia.obtener_gastos():
+                gasto_efectivo = 0
+                gasto_tarjeta = 0
+                gasto_diario_total = 0
+                if gasto._metodo_pago == "EFECTIVO":
+                    gasto_efectivo += gasto.obtener_valor_gastado()
+                    gasto_efectivo = gasto_efectivo*cambio
+                elif gasto._metodo_pago == "TARJETA":
+                    gasto_tarjeta += gasto.obtener_valor_gastado()
+                    gasto_tarjeta = gasto_tarjeta*cambio
+                gasto_diario_total = gasto_efectivo + gasto_tarjeta
+            print("Gastos para el día "+str(dia._fecha)+" (COP): \nGasto en efectivo: "+str(gasto_efectivo)+"\nGasto en tarjeta: "+str(gasto_tarjeta)+"\nTotal: "+str(gasto_diario_total)+"\n")
