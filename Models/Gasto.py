@@ -5,3 +5,6 @@ class Gasto:
         self._valor_gastado = valor_gastado
         self._metodo_pago = metodo_pago
         self._tipo_gasto = tipo_gasto
+
+    def obtener_valor_gastado(self) -> float:
+        return self._valor_gastado

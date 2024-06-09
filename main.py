@@ -12,7 +12,7 @@ y permite seleccionar uno de ellos.
 :return: cadena correspondiente al destino seleccionado
 """
 def seleccionar_destino() -> str:
-    print("Seleccione el destino:")
+    print("\nSeleccione el destino:")
     for i, destino in enumerate(Destino, start=1):
         print(f"{i}. {destino.value}")
         
@@ -32,7 +32,7 @@ y permite seleccionar uno de ellos.
 :return: cadena correspondiente al método de pago seleccionado
 """
 def seleccionar_metodo_pago() -> str:
-    print("Seleccione el método de pago:")
+    print("\nSeleccione el método de pago:")
     for i, metodo in enumerate(MetodoPago, start=1):
         print(f"{i}. {metodo.value}")
         
@@ -52,7 +52,7 @@ y permite seleccionar uno de ellos.
 :return: cadena correspondiente al tipo de gasto seleccionado
 """
 def seleccionar_tipo_gasto() -> str:
-    print("Seleccione el tipo de gasto:")
+    print("\nSeleccione el tipo de gasto:")
     for i, tipo in enumerate(TipoGasto, start=1):
         print(f"{i}. {tipo.value}")
         
@@ -81,7 +81,7 @@ def validar_fechas() -> date:
             else:
                 return fecha_inicio, fecha_final
         except ValueError:
-            pass
+            print("Formato de fecha inválido, Introduzca una fecha en formato AAAA-MM-DD.")
 
 """
 Método que valida el formato de fecha ingresado (AAAA-MM-DD).
@@ -94,7 +94,7 @@ def validar_formato_fecha(mensaje) -> date:
             fecha = date.fromisoformat(input(mensaje))
             return fecha
         except ValueError:
-            pass
+            print("Formato de fecha inválido, Introduzca una fecha en formato AAAA-MM-DD.")
         
 
 def seleccionar_fecha_dia(viaje: Viaje):
@@ -108,51 +108,43 @@ def seleccionar_fecha_dia(viaje: Viaje):
             else:
                 print("La fecha indicada no pertenece al viaje")
         except ValueError:
-            print("Ingrese una fecha válida en el formato AAAA-MM-DD")
-
-    
-        
+            print("Formato de fecha inválido, Introduzca una fecha en formato AAAA-MM-DD.")
         
 def main():
     fin = False
+    control_viaje = ControlViaje()
 
     while not fin:
+        print("¡Bienvenido!, para iniciar por favor registre su viaje")
+        
         # Creación de viaje
         destino = seleccionar_destino()
-        presupuesto = float(input("Ingrese el presupuesto estimado: "))
+        presupuesto = float(input("Ingrese el presupuesto diario estimado: "))
         fecha_inicio, fecha_final = validar_fechas()
         viaje = Viaje(destino, presupuesto, fecha_inicio, fecha_final)
         
         viaje.agregar_dias_viaje()
         
         # Agregar gastos a un día
-        agregar_gastos = input("¿Desea agregar gastos a un día? (s/n): ").lower()
-        if agregar_gastos == 's':
-            while True:
-                
-                fecha_dia = seleccionar_fecha_dia(viaje)
-                valor_gastado = float(input("Ingrese el valor gastado: "))
-                metodo_pago = seleccionar_metodo_pago()
-                tipo_gasto = seleccionar_tipo_gasto()
-                
-                ControlViaje.registrar_gasto()
-                    
-
-                    
-                gasto = Gasto(valor_gastado, metodo_pago, tipo_gasto)
-                dia_viaje.agregar_gasto(gasto)
-                    
-                agregar_gastos = input("¿Desea agregar otro gasto a este día? (s/n): ").lower()
-                
-                viaje.agregar_dia(dia_viaje)
-                
-                agregar_otro_gasto = input("¿Desea agregar otro gasto al viaje? (s/n): ").lower()
-                if agregar_otro_gasto != 's':
-                    break
-    
-        fin = True
+        agregar_gastos = input("\n¿Desea agregar gastos a un día? (s/n): ").lower()
+        while agregar_gastos == 's':
+            fecha_dia = seleccionar_fecha_dia(viaje)
+            valor_gastado = float(input("Ingrese el valor gastado: "))
+            metodo_pago = seleccionar_metodo_pago()
+            tipo_gasto = seleccionar_tipo_gasto()
+            
+            diferencia = control_viaje.registrar_gasto(viaje, fecha_dia, valor_gastado, metodo_pago, tipo_gasto)
+            print("\n--> Diferencia de gasto con respecto al presupuesto diario: " + diferencia)
+            
+            agregar_gastos = input("\n¿Desea agregar otro gasto a un día? (s/n): ").lower()
+        
+        # Preguntar si desea registrar un nuevo viaje
+        nuevo_viaje = input("\n¿Desea registrar un nuevo viaje? (s/n): ").lower()
+        if nuevo_viaje == 'n':
+            fin = True
 
 if __name__ == "__main__":
     main()
+
     
     

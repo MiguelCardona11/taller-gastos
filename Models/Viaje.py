@@ -3,7 +3,6 @@ from datetime import date, timedelta
 from typing import List
 from enums import Destino
 
-
 class Viaje:
     def __init__(self, lugar_destino: Destino, presupuesto_estimado: float, fecha_inicio: date, fecha_final: date):
         self._lugar_destino = lugar_destino
@@ -34,9 +33,10 @@ class Viaje:
     def imprimir_fechas_viaje(self):
         for dia in self._DiasViaje:
             print(dia.obtener_fecha())
+            
+    def obtener_presupuesto(self):
+        return self._presupuesto_estimado
     
 
     
     
-## pruebas
-viajeEuropa = Viaje(Destino.EUROPA, 100000, date(2023, 7, 10), date(2023, 7, 20))
